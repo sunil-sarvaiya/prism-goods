@@ -1,4 +1,5 @@
 import { Smartphone, Headphones, Laptop, Shirt, Home, Gamepad2, Book, Sparkles } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const categories = [
   {
@@ -72,7 +73,8 @@ export function CategorySection() {
           {categories.map((category, index) => {
             const IconComponent = category.icon;
             return (
-              <div
+              <Link
+                to={`/products?category=${encodeURIComponent(category.name.toLowerCase())}`}
                 key={category.id}
                 className="category-card text-center group animate-slide-up"
                 style={{ animationDelay: `${index * 0.1}s` }}
@@ -86,7 +88,7 @@ export function CategorySection() {
                 <p className="text-sm text-success font-medium">
                   {category.deals}
                 </p>
-              </div>
+              </Link>
             );
           })}
         </div>

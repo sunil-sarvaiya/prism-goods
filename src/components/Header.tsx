@@ -92,9 +92,12 @@ export function Header() {
             )}
           </Button>
 
-          {/* Login Button */}
-          <Button variant="outline" size="sm" className="hidden sm:flex">
-            Login
+          {/* Auth Buttons */}
+          <Button asChild variant="outline" size="sm" className="hidden sm:flex">
+            <Link to="/login">Login</Link>
+          </Button>
+          <Button asChild size="sm" className="hidden sm:flex">
+            <Link to="/register">Register</Link>
           </Button>
         </div>
       </div>
@@ -104,12 +107,12 @@ export function Header() {
         <div className="container mx-auto px-4">
           <div className="flex items-center space-x-8 h-12 text-sm">
             <Link to="/mission" className="text-muted-foreground hover:text-primary transition-colors">Mission</Link>
-            <a href="#" className="text-foreground hover:text-primary transition-colors font-medium">Electronics</a>
-            <a href="#" className="text-muted-foreground hover:text-primary transition-colors">Fashion</a>
-            <a href="#" className="text-muted-foreground hover:text-primary transition-colors">Home & Kitchen</a>
-            <a href="#" className="text-muted-foreground hover:text-primary transition-colors">Sports</a>
-            <a href="#" className="text-muted-foreground hover:text-primary transition-colors">Books</a>
-            <a href="#" className="text-muted-foreground hover:text-primary transition-colors">Beauty</a>
+            <Link to="/products?category=electronics" className="text-foreground hover:text-primary transition-colors font-medium">Electronics</Link>
+            <Link to="/products?category=fashion" className="text-muted-foreground hover:text-primary transition-colors">Fashion</Link>
+            <Link to="/products?category=home" className="text-muted-foreground hover:text-primary transition-colors">Home & Kitchen</Link>
+            <Link to="/products?category=sports" className="text-muted-foreground hover:text-primary transition-colors">Sports</Link>
+            <Link to="/products?category=books" className="text-muted-foreground hover:text-primary transition-colors">Books</Link>
+            <Link to="/products?category=beauty" className="text-muted-foreground hover:text-primary transition-colors">Beauty</Link>
             <div className="flex items-center space-x-2 ml-auto">
               <span className="deal-badge">🔥 Deals</span>
               <span className="text-success font-medium">Free Delivery</span>

@@ -1,4 +1,5 @@
 import { ProductCard } from './ProductCard';
+import { Link } from 'react-router-dom';
 import phoneImage from '@/assets/phone-product.jpg';
 import headphonesImage from '@/assets/headphones-product.jpg';
 import laptopImage from '@/assets/laptop-product.jpg';
@@ -101,9 +102,9 @@ export function ProductGrid({ title = "Trending Products", subtitle, showViewAll
             {subtitle && <p className="text-muted-foreground">{subtitle}</p>}
           </div>
           {showViewAll && (
-            <button className="text-primary hover:text-primary-glow font-medium transition-colors">
+            <Link to="/products" className="text-primary hover:text-primary-glow font-medium transition-colors">
               View All →
-            </button>
+            </Link>
           )}
         </div>
 
