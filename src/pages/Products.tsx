@@ -2,62 +2,32 @@ import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { SEO } from '@/components/SEO';
 import { ProductCard } from '@/components/ProductCard';
-import phoneImage from '@/assets/phone-product.jpg';
-import headphonesImage from '@/assets/headphones-product.jpg';
-import laptopImage from '@/assets/laptop-product.jpg';
 import { Slider } from '@/components/ui/slider';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
 import { useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-
-const allProducts = [
-  { id: '1', name: 'iPhone 15 Pro - 128GB Natural Titanium', image: phoneImage, price: 134900, originalPrice: 149900, rating: 4.6, reviewCount: 2847, discount: 10, isBestSeller: true, isAssured: true, freeDelivery: true },
-  { id: '2', name: 'Sony WH-1000XM5 Wireless Noise Cancelling Headphones', image: headphonesImage, price: 24990, originalPrice: 34990, rating: 4.8, reviewCount: 1523, discount: 29, isBestSeller: false, isAssured: true, freeDelivery: true },
-  { id: '3', name: 'ASUS ROG Strix G15 Gaming Laptop - RTX 4060', image: laptopImage, price: 89990, originalPrice: 119990, rating: 4.5, reviewCount: 892, discount: 25, isBestSeller: true, isAssured: false, freeDelivery: false },
-  { id: '4', name: 'iPhone 14 - 128GB Blue', image: phoneImage, price: 69900, originalPrice: 79900, rating: 4.4, reviewCount: 4521, discount: 13, isBestSeller: false, isAssured: true, freeDelivery: true },
-  { id: '5', name: 'JBL Tune 770NC Wireless Over-Ear Headphones', image: headphonesImage, price: 7999, originalPrice: 12999, rating: 4.3, reviewCount: 756, discount: 38, isBestSeller: false, isAssured: false, freeDelivery: true },
-  { id: '6', name: 'Dell XPS 13 Laptop - 11th Gen Intel Core i7', image: laptopImage, price: 124990, originalPrice: 149990, rating: 4.7, reviewCount: 342, discount: 17, isBestSeller: false, isAssured: true, freeDelivery: false },
-];
+import { allProducts, extractBrand, matchesCategory, getUniqueBrands } from '@/data/mockData';
 
 type SortKey = 'relevance' | 'price_asc' | 'price_desc' | 'rating_desc';
 
-function extractBrand(name: string) {
-  if (/iphone/i.test(name)) return 'Apple';
-  if (/sony/i.test(name)) return 'Sony';
-  if (/asus/i.test(name)) return 'ASUS';
-  if (/jbl/i.test(name)) return 'JBL';
-  if (/dell/i.test(name)) return 'Dell';
-  return 'Brand';
-}
-
-function matchesCategory(name: string, category?: string) {
-  if (!category) return true;
-  const c = category.toLowerCase();
-  if (c.includes('mobile')) return /iphone/i.test(name);
-  if (c.includes('laptop')) return /asus|dell/i.test(name);
-  if (c.includes('electronic') || c.includes('headphone')) return /sony|jbl/i.test(name);
-  return true;
-}
-
 export default function Products() {
   const [params, setParams] = useSearchParams();
-  const [price, setPrice] = useState<number[]>([0, Number(params.get('priceMax')) || 150000]);
+  const [price, setPrice] = useState<number[]>([0, Number(params.get('priceMax')) || 200000]);
   const [sort, setSort] = useState<SortKey>((params.get('sort') as SortKey) || 'relevance');
   const selectedBrands = (params.get('brands') || '').split(',').filter(Boolean);
   const categoryParam = params.get('category') || undefined;
 
   const brands = useMemo(() => {
-    const set = new Set(allProducts.map(p => extractBrand(p.name)));
-    return Array.from(set);
+    return getUniqueBrands();
   }, []);
 
   const products = useMemo(() => {
-    let list = allProducts.filter(p => matchesCategory(p.name, categoryParam));
+    let list = allProducts.filter(p => matchesCategory(p, categoryParam));
 
     if (selectedBrands.length) {
-      list = list.filter(p => selectedBrands.includes(extractBrand(p.name)));
+      list = list.filter(p => selectedBrands.includes(p.brand));
     }
 
     list = list.filter(p => p.price >= price[0] && p.price <= price[1]);
@@ -120,7 +90,7 @@ export default function Products() {
             <div className="space-y-6">
               <div>
                 <h3 className="font-medium mb-2">Price</h3>
-                <Slider value={price} onValueChange={setPrice} onValueCommit={applyPrice} max={150000} step={1000} className="my-4" />
+                <Slider value={price} onValueChange={setPrice} onValueCommit={applyPrice} max={200000} step={1000} className="my-4" />
                 <div className="text-sm text-muted-foreground">₹{price[0].toLocaleString()} - ₹{price[1].toLocaleString()}</div>
               </div>
               <div>

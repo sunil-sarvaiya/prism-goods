@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Clock } from 'lucide-react';
 import { Button } from './ui/button';
+import { ImageWithFallback } from './ImageWithFallback';
 import heroBannerImage from '@/assets/hero-banner.jpg';
 
 const banners = [
@@ -92,10 +93,11 @@ export function HeroBanner() {
       >
         {/* Background Image */}
         <div className="absolute inset-0 opacity-20">
-          <img 
-            src={currentBanner.image} 
+          <ImageWithFallback
+            src={currentBanner.image}
             alt={currentBanner.title}
             className="w-full h-full object-cover"
+            showLoadingSpinner={false}
           />
         </div>
 

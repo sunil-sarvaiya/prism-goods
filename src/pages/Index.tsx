@@ -22,6 +22,19 @@ const Index = () => {
         <ProductGrid 
           title="Trending Electronics"
           subtitle="Most popular gadgets this month"
+          category="electronics"
+        />
+
+        <ProductGrid 
+          title="Top Fashion Picks"
+          subtitle="Style meets comfort in our fashion collection"
+          category="fashion"
+        />
+
+        <ProductGrid 
+          title="Gaming Essentials"
+          subtitle="Level up your gaming experience"
+          category="gaming"
         />
 
         {/* Deal of the Day Section */}
@@ -36,6 +49,7 @@ const Index = () => {
               <ProductGrid 
                 title=""
                 showViewAll={false}
+                maxProducts={4}
               />
             </div>
           </div>

@@ -1,6 +1,9 @@
-import { Heart, Star, ShoppingCart } from 'lucide-react';
+import { Heart, Star, ShoppingCart, Check } from 'lucide-react';
 import { Button } from './ui/button';
 import { Badge } from './ui/badge';
+import { ImageWithFallback } from './ImageWithFallback';
+import { useCart } from '@/contexts/CartContext';
+import { useState } from 'react';
 
 interface ProductCardProps {
   id: string;
@@ -14,9 +17,15 @@ interface ProductCardProps {
   isBestSeller?: boolean;
   isAssured?: boolean;
   freeDelivery?: boolean;
+  category?: string;
+  brand?: string;
+  description?: string;
+  inStock?: boolean;
+  tags?: string[];
 }
 
 export function ProductCard({
+  id,
   name,
   image,
   price,
@@ -27,7 +36,53 @@ export function ProductCard({
   isBestSeller,
   isAssured,
   freeDelivery,
+  category = '',
+  brand = '',
+  description = '',
+  inStock = true,
+  tags = [],
 }: ProductCardProps) {
+  const { addToCart, isInCart } = useCart();
+  const [isAddingToCart, setIsAddingToCart] = useState(false);
+  const [showAddedFeedback, setShowAddedFeedback] = useState(false);
+
+  const handleAddToCart = async () => {
+    if (isInCart(id)) return;
+    
+    setIsAddingToCart(true);
+    
+    // Create a product object from the props
+    const product = {
+      id,
+      name,
+      image,
+      price,
+      originalPrice,
+      rating,
+      reviewCount,
+      discount,
+      isBestSeller,
+      isAssured,
+      freeDelivery,
+      category,
+      brand,
+      description,
+      inStock,
+      tags,
+    };
+
+    addToCart(product);
+    
+    // Show feedback
+    setShowAddedFeedback(true);
+    setTimeout(() => {
+      setShowAddedFeedback(false);
+      setIsAddingToCart(false);
+    }, 2000);
+  };
+
+  const isItemInCart = isInCart(id);
+
   return (
     <div className="product-card group relative overflow-hidden">
       {/* Wishlist Button */}
@@ -41,10 +96,11 @@ export function ProductCard({
 
       {/* Product Image */}
       <div className="relative aspect-square overflow-hidden bg-muted/20">
-        <img
+        <ImageWithFallback
           src={image}
           alt={name}
           className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+          showLoadingSpinner={true}
         />
         
         {/* Badges */}
@@ -105,11 +161,31 @@ export function ProductCard({
 
         {/* Add to Cart Button */}
         <Button 
-          className="w-full btn-primary opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0"
+          onClick={handleAddToCart}
+          disabled={isAddingToCart || isItemInCart}
+          className={`w-full transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 ${
+            isItemInCart 
+              ? 'opacity-100 bg-success hover:bg-success' 
+              : 'opacity-0 group-hover:opacity-100 btn-primary'
+          }`}
           size="sm"
         >
-          <ShoppingCart className="h-4 w-4 mr-2" />
-          Add to Cart
+          {isAddingToCart ? (
+            <>
+              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+              Adding...
+            </>
+          ) : showAddedFeedback || isItemInCart ? (
+            <>
+              <Check className="h-4 w-4 mr-2" />
+              {isItemInCart ? 'In Cart' : 'Added!'}
+            </>
+          ) : (
+            <>
+              <ShoppingCart className="h-4 w-4 mr-2" />
+              Add to Cart
+            </>
+          )}
         </Button>
       </div>
     </div>

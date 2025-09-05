@@ -1,6 +1,7 @@
 import { Facebook, Twitter, Instagram, Youtube, Mail, Phone, MapPin } from 'lucide-react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
+import { Link } from 'react-router-dom';
 
 export function Footer() {
   return (
@@ -40,11 +41,11 @@ export function Footer() {
           <div>
             <h4 className="font-semibold text-foreground mb-4">Quick Links</h4>
             <ul className="space-y-2 text-muted-foreground">
-              <li><a href="#" className="hover:text-primary transition-colors">About Us</a></li>
-              <li><a href="#" className="hover:text-primary transition-colors">Contact</a></li>
-              <li><a href="#" className="hover:text-primary transition-colors">Careers</a></li>
-              <li><a href="#" className="hover:text-primary transition-colors">Press</a></li>
-              <li><a href="#" className="hover:text-primary transition-colors">Sitemap</a></li>
+              <li><Link to="/about" className="hover:text-primary transition-colors">About Us</Link></li>
+              <li><Link to="/contact" className="hover:text-primary transition-colors">Contact</Link></li>
+              <li><Link to="/careers" className="hover:text-primary transition-colors">Careers</Link></li>
+              <li><Link to="/press" className="hover:text-primary transition-colors">Press</Link></li>
+              <li><Link to="/sitemap" className="hover:text-primary transition-colors">Sitemap</Link></li>
             </ul>
           </div>
 
@@ -52,11 +53,11 @@ export function Footer() {
           <div>
             <h4 className="font-semibold text-foreground mb-4">Customer Service</h4>
             <ul className="space-y-2 text-muted-foreground">
-              <li><a href="#" className="hover:text-primary transition-colors">Help Center</a></li>
-              <li><a href="#" className="hover:text-primary transition-colors">Returns</a></li>
-              <li><a href="#" className="hover:text-primary transition-colors">Shipping Info</a></li>
-              <li><a href="#" className="hover:text-primary transition-colors">Track Order</a></li>
-              <li><a href="#" className="hover:text-primary transition-colors">Size Guide</a></li>
+              <li><Link to="/help" className="hover:text-primary transition-colors">Help Center</Link></li>
+              <li><Link to="/returns" className="hover:text-primary transition-colors">Returns</Link></li>
+              <li><Link to="/shipping" className="hover:text-primary transition-colors">Shipping Info</Link></li>
+              <li><Link to="/track-order" className="hover:text-primary transition-colors">Track Order</Link></li>
+              <li><Link to="/size-guide" className="hover:text-primary transition-colors">Size Guide</Link></li>
             </ul>
           </div>
 
@@ -104,9 +105,9 @@ export function Footer() {
             </div>
             
             <div className="flex gap-6 text-sm text-muted-foreground">
-              <a href="#" className="hover:text-primary transition-colors">Privacy Policy</a>
-              <a href="#" className="hover:text-primary transition-colors">Terms of Service</a>
-              <a href="#" className="hover:text-primary transition-colors">Cookie Policy</a>
+              <Link to="/privacy" className="hover:text-primary transition-colors">Privacy Policy</Link>
+              <Link to="/terms" className="hover:text-primary transition-colors">Terms of Service</Link>
+              <Link to="/cookies" className="hover:text-primary transition-colors">Cookie Policy</Link>
             </div>
           </div>
         </div>

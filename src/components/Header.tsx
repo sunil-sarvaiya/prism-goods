@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Search, ShoppingCart, User, Menu, Sun, Moon, Monitor } from 'lucide-react';
 import { useTheme } from './ThemeProvider';
+import { useCart } from '@/contexts/CartContext';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Badge } from './ui/badge';
@@ -14,8 +15,9 @@ import {
 
 export function Header() {
   const [searchQuery, setSearchQuery] = useState('');
-  const [cartCount] = useState(3);
   const { theme, setTheme } = useTheme();
+  const { state } = useCart();
+  const cartCount = state.totalItems;
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -80,16 +82,18 @@ export function Header() {
           </Button>
 
           {/* Shopping Cart */}
-          <Button variant="ghost" size="icon" className="h-9 w-9 relative">
-            <ShoppingCart className="h-4 w-4" />
-            {cartCount > 0 && (
-              <Badge 
-                variant="destructive" 
-                className="absolute -top-2 -right-2 h-5 w-5 rounded-full p-0 text-xs flex items-center justify-center"
-              >
-                {cartCount}
-              </Badge>
-            )}
+          <Button asChild variant="ghost" size="icon" className="h-9 w-9 relative">
+            <Link to="/cart">
+              <ShoppingCart className="h-4 w-4" />
+              {cartCount > 0 && (
+                <Badge 
+                  variant="destructive" 
+                  className="absolute -top-2 -right-2 h-5 w-5 rounded-full p-0 text-xs flex items-center justify-center"
+                >
+                  {cartCount > 99 ? '99+' : cartCount}
+                </Badge>
+              )}
+            </Link>
           </Button>
 
           {/* Auth Buttons */}
