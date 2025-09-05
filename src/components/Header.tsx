@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Search, ShoppingCart, User, Menu, Sun, Moon, Monitor } from 'lucide-react';
 import { useTheme } from './ThemeProvider';
 import { Button } from './ui/button';
@@ -24,12 +25,12 @@ export function Header() {
           <Button variant="ghost" size="icon" className="md:hidden">
             <Menu className="h-5 w-5" />
           </Button>
-          <div className="flex items-center space-x-2">
+          <Link to="/" className="flex items-center space-x-2">
             <div className="h-8 w-8 bg-gradient-to-r from-primary to-primary-glow rounded-lg flex items-center justify-center">
               <span className="text-primary-foreground font-bold text-sm">EC</span>
             </div>
             <span className="text-xl font-bold text-gradient hidden sm:block">EcommerceApp</span>
-          </div>
+          </Link>
         </div>
 
         {/* Search Bar */}
@@ -102,6 +103,7 @@ export function Header() {
       <nav className="hidden md:flex border-t border-border bg-muted/30">
         <div className="container mx-auto px-4">
           <div className="flex items-center space-x-8 h-12 text-sm">
+            <Link to="/mission" className="text-muted-foreground hover:text-primary transition-colors">Mission</Link>
             <a href="#" className="text-foreground hover:text-primary transition-colors font-medium">Electronics</a>
             <a href="#" className="text-muted-foreground hover:text-primary transition-colors">Fashion</a>
             <a href="#" className="text-muted-foreground hover:text-primary transition-colors">Home & Kitchen</a>
